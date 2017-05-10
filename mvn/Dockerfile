@@ -74,6 +74,4 @@ WORKDIR /data
 
 COPY settings-docker.xml /usr/share/maven/ref/
 
-VOLUME "$USER_HOME_DIR/.m2"
-
 CMD ["mvn"]
