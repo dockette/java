@@ -15,7 +15,9 @@ Ready-to-use images for Java JDK 8 (OpenJDK) & Maven 3.
 
 ### Oracle JDK 8
 
-This Oracle Java JDK 8 is based on Alpine linux (`dockette/alpine:34`).
+> Java 1.8.0_131-b13
+
+This Oracle Java JDK 8 is based on Alpine linux (`dockette/alpine:3.8`).
 
 [![Docker Stars](https://img.shields.io/docker/stars/dockette/jdk8.svg?style=flat)](https://hub.docker.com/r/dockette/jdk8/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/dockette/jdk8.svg?style=flat)](https://hub.docker.com/r/dockette/jdk8/)
@@ -26,7 +28,9 @@ docker run -v /path/to/site:/srv dockette/jdk8
 
 ### OpenJDK 8
 
-This OpenJDK 8 is based on Alpine linux (`dockette/alpine:34`).
+> OpenJDK 8.171.11-r0
+
+This OpenJDK 8 is based on Alpine linux (`dockette/alpine:3.8`).
 
 [![Docker Stars](https://img.shields.io/docker/stars/dockette/openjdk8.svg?style=flat)](https://hub.docker.com/r/dockette/openjdk8/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/dockette/openjdk8.svg?style=flat)](https://hub.docker.com/r/dockette/openjdk8/)
@@ -37,7 +41,9 @@ docker run -v /path/to/site:/srv dockette/openjdk8
 
 ### Maven 3 
 
-This Maven 3 with Oracle Java JDK 8 is based on Alpine linux (`dockette/alpine:34`).
+> Maven 3.5.4
+
+This Maven 3 with Oracle Java JDK 8 is based on Alpine linux (`dockette/alpine:3.8`).
 
 [![Docker Stars](https://img.shields.io/docker/stars/dockette/mvn.svg?style=flat)](https://hub.docker.com/r/dockette/mvn/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/dockette/mvn.svg?style=flat)](https://hub.docker.com/r/dockette/mvn/)

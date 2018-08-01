@@ -1,12 +1,12 @@
-FROM dockette/alpine:3.4
+FROM dockette/alpine:3.8
 
 MAINTAINER Milan Sulc <sulcmil@gmail.com>
 
 ENV LANG C.UTF-8
 ENV JAVA_HOME /usr/lib/jvm/java-1.8-openjdk
 ENV PATH $PATH:/usr/lib/jvm/java-1.8-openjdk/jre/bin:/usr/lib/jvm/java-1.8-openjdk/bin
-ENV JAVA_VERSION 8u111
-ENV JAVA_ALPINE_VERSION 8.111.14-r0
+ENV JAVA_VERSION 8u171
+ENV JAVA_ALPINE_VERSION 8.171.11-r0
 
 # Based on offical OpenJDK image (thank you)
 

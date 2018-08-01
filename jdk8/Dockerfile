@@ -1,13 +1,14 @@
-FROM dockette/alpine:3.4
+FROM dockette/alpine:3.8
 
 MAINTAINER Milan Sulc <sulcmil@gmail.com>
 
-ENV JAVA_VERSION=8
-ENV JAVA_UPDATE=112
-ENV JAVA_BUILD=15
-ENV JAVA_HOME="/usr/lib/jvm/default-jvm"
-ENV LANG=C.UTF-8
-ENV GLIBC_VERSION=2.23-r3
+ENV JAVA_VERSION=8  \
+    JAVA_UPDATE=181 \
+    JAVA_BUILD=13 \
+    JAVA_HOME="/usr/lib/jvm/default-jvm" \
+    LANG=C.UTF-8 \
+    GLIBC_VERSION=2.27-r0 \ 
+    ORACLE_AUTHORIZATION_KEY=96a7b8442fe848ef90c96a2fad6ed6d1 
 
 # Based on offical @andreptb/Dockerfiles (thank you)
 
@@ -21,7 +22,7 @@ RUN apk upgrade --update && \
     /usr/glibc-compat/sbin/ldconfig /lib /usr/glibc-compat/lib && \
     echo 'hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4' >> /etc/nsswitch.conf && \
     curl -jksSLH "Cookie: oraclelicense=accept-securebackup-cookie" -o /tmp/java.tar.gz \
-        "http://download.oracle.com/otn-pub/java/jdk/${JAVA_VERSION}u${JAVA_UPDATE}-b${JAVA_BUILD}/jdk-${JAVA_VERSION}u${JAVA_UPDATE}-linux-x64.tar.gz" && \
+        "http://download.oracle.com/otn-pub/java/jdk/${JAVA_VERSION}u${JAVA_UPDATE}-b${JAVA_BUILD}/${ORACLE_AUTHORIZATION_KEY}/jdk-${JAVA_VERSION}u${JAVA_UPDATE}-linux-x64.tar.gz" && \
     curl -jksSLH "Cookie: oraclelicense=accept-securebackup-cookie" -o /tmp/jce_policy-${JAVA_VERSION}.zip \
         "http://download.oracle.com/otn-pub/java/jce/${JAVA_VERSION}/jce_policy-${JAVA_VERSION}.zip" && \
     gunzip /tmp/java.tar.gz && \
@@ -35,11 +36,22 @@ RUN apk upgrade --update && \
     rm -rf "$JAVA_HOME/"*src.zip \
            "$JAVA_HOME/lib/missioncontrol" \
            "$JAVA_HOME/lib/visualvm" \
+           "$JAVA_HOME/lib/"*javafx* \
+           "$JAVA_HOME/jre/lib/ext/jfxrt.jar" \
            "$JAVA_HOME/jre/bin/javaws" \
            "$JAVA_HOME/jre/lib/javaws.jar" \
            "$JAVA_HOME/jre/lib/desktop" \
            "$JAVA_HOME/jre/plugin" \
            "$JAVA_HOME/jre/lib/"deploy* \
+           "$JAVA_HOME/jre/lib/"*javafx* \
+           "$JAVA_HOME/jre/lib/"*jfx* \
+           "$JAVA_HOME/jre/lib/amd64/libdecora_sse.so" \
+           "$JAVA_HOME/jre/lib/amd64/"libprism_*.so \
+           "$JAVA_HOME/jre/lib/amd64/libfxplugins.so" \
+           "$JAVA_HOME/jre/lib/amd64/libglass.so" \
+           "$JAVA_HOME/jre/lib/amd64/libgstreamer-lite.so" \
+           "$JAVA_HOME/jre/lib/amd64/"libjavafx*.so \
+           "$JAVA_HOME/jre/lib/amd64/"libjfx*.so \
            "$JAVA_HOME/jre/bin/jjs" \
            "$JAVA_HOME/jre/bin/keytool" \
            "$JAVA_HOME/jre/bin/orbd" \
@@ -55,7 +67,9 @@ RUN apk upgrade --update && \
            "$JAVA_HOME/jre/lib/jfr" \
            "$JAVA_HOME/jre/lib/oblique-fonts" && \
     # CLEANUP ==================================================================
-    apk del build-dependencies unzip curl tar libstdc++ && \
+    apk del build-dependencies && \
     rm -rf /tmp/* /var/cache/apk/*
 
 WORKDIR /data
+
+CMD ["mvn"]
