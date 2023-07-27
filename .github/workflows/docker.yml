@@ -1,0 +1,27 @@
+name: "Docker"
+
+on:
+  push:
+    branches: ["master"]
+
+  schedule:
+    - cron: "0 8 * * 1"
+
+jobs:
+  build:
+    name: "Build"
+    uses: dockette/.github/.github/workflows/docker.yml@master
+    secrets: inherit
+    with:
+        image: "dockette/${{ matrix.item }}"
+        tag: "latest"
+        context: "${{ matrix.item }}"
+    strategy:
+      matrix:
+        include:
+          - item: jdk8
+          - item: mvn
+          - item: openjdk-mvn
+          - item: openjdk8
+
+      fail-fast: false
