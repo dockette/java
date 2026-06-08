@@ -1,6 +1,8 @@
 name: "Docker"
 
 on:
+  workflow_dispatch:
+
   push:
     branches: ["master"]
 
@@ -11,14 +13,45 @@ permissions:
   contents: read
 
 jobs:
+  test:
+    name: "Test"
+    runs-on: "ubuntu-latest"
+
+    strategy:
+      matrix:
+        include:
+          - item: jdk8
+          - item: mvn
+          - item: openjdk-mvn
+          - item: openjdk8
+      fail-fast: false
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v4
+
+      - name: "Set up Docker Buildx"
+        uses: docker/setup-buildx-action@v3
+
+      - name: "Build image"
+        uses: docker/build-push-action@v6
+        with:
+          context: "${{ matrix.item }}"
+          load: true
+          tags: "dockette/${{ matrix.item }}:latest"
+
+      - name: "Test image"
+        run: "make test-${{ matrix.item }}"
+
   build:
     name: "Build"
+    needs: ["test"]
     uses: dockette/.github/.github/workflows/docker.yml@master
     secrets: inherit
     with:
-        image: "dockette/${{ matrix.item }}"
-        tag: "latest"
-        context: "${{ matrix.item }}"
+      image: "dockette/${{ matrix.item }}"
+      tag: "latest"
+      context: "${{ matrix.item }}"
     strategy:
       matrix:
         include:
@@ -28,3 +61,20 @@ jobs:
           - item: openjdk8
 
       fail-fast: false
+
+  docs:
+    name: "Docs"
+    runs-on: "ubuntu-latest"
+    needs: ["build"]
+    if: github.ref == 'refs/heads/master'
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v4
+
+      - name: "Update Docker Hub description"
+        uses: peter-evans/dockerhub-description@v5
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: "dockette/java"

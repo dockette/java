@@ -1,24 +1,10 @@
-FROM dockette/alpine:3.8
+FROM eclipse-temurin:8-jdk-alpine
 
 MAINTAINER Milan Sulc <sulcmil@gmail.com>
 
-ENV LANG C.UTF-8
-ENV JAVA_HOME /usr/lib/jvm/java-1.8-openjdk
-ENV PATH $PATH:/usr/lib/jvm/java-1.8-openjdk/jre/bin:/usr/lib/jvm/java-1.8-openjdk/bin
-ENV JAVA_VERSION 8u171
-ENV JAVA_ALPINE_VERSION 8.171.11-r0
-
-# Based on offical OpenJDK image (thank you)
-
-RUN { \
-        echo '#!/bin/sh'; \
-        echo 'set -e'; \
-        echo; \
-        echo 'dirname "$(dirname "$(readlink -f "$(which javac || which java)")")"'; \
-    } > /usr/local/bin/docker-java-home && \
-    chmod +x /usr/local/bin/docker-java-home && \
-    set -x && \
-    apk add --no-cache openjdk8="$JAVA_ALPINE_VERSION" && \
-    [ "$JAVA_HOME" = "$(docker-java-home)" ]
+ENV LANG=C.UTF-8
+ENV JAVA_HOME=/opt/java/openjdk
 
 WORKDIR /data
+
+CMD ["java", "-version"]
