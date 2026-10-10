@@ -28,3 +28,18 @@ jobs:
           - item: openjdk8
 
       fail-fast: false
+  docs:
+    name: "Docs"
+    needs: ["build"]
+    if: github.ref == 'refs/heads/master'
+    uses: dockette/.github/.github/workflows/dockerhub-description.yml@master
+    secrets: inherit
+    with:
+      image: "dockette/${{ matrix.item }}"
+    strategy:
+      matrix:
+        include:
+          - item: jdk8
+          - item: mvn
+          - item: openjdk-mvn
+          - item: openjdk8
