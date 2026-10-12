@@ -19,6 +19,8 @@ jobs:
         image: "dockette/${{ matrix.item }}"
         tag: "latest"
         context: "${{ matrix.item }}"
+        # eclipse-temurin:8 alpine images are published for amd64 only
+        platforms: "linux/amd64"
     strategy:
       matrix:
         include:
