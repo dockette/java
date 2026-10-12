@@ -1,6 +1,6 @@
 # JAVA
 
-Ready-to-use images for Java JDK 8 (OpenJDK) & Maven 3.
+Ready-to-use images for Java JDK 8 (Eclipse Temurin) & Maven 3.
 
 -----
 
@@ -13,43 +13,46 @@ Ready-to-use images for Java JDK 8 (OpenJDK) & Maven 3.
 
 ## Usage
 
-### Oracle JDK 8
+All images are based on [Eclipse Temurin](https://adoptium.net/) 8 (the maintained OpenJDK 8 build) on Alpine Linux and are built for `linux/amd64`. The working directory is `/data`.
 
-> Java 1.8.0_131-b13
+### JDK 8
 
-This Oracle Java JDK 8 is based on Alpine linux (`dockette/alpine:3.8`).
+> Eclipse Temurin 8 (`eclipse-temurin:8-jdk-alpine`)
+
+Formerly Oracle JDK 8. Oracle JDK can no longer be downloaded anonymously, so this tag now ships Eclipse Temurin 8 (same image as `dockette/openjdk8`).
 
 [![Docker Stars](https://img.shields.io/docker/stars/dockette/jdk8.svg?style=flat)](https://hub.docker.com/r/dockette/jdk8/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/dockette/jdk8.svg?style=flat)](https://hub.docker.com/r/dockette/jdk8/)
 
 ```
-docker run -v /path/to/site:/srv dockette/jdk8
+docker run --rm -v /path/to/project:/data dockette/jdk8 java -version
 ```
 
 ### OpenJDK 8
 
-> OpenJDK 8.171.11-r0
-
-This OpenJDK 8 is based on Alpine linux (`dockette/alpine:3.8`).
+> Eclipse Temurin 8 (`eclipse-temurin:8-jdk-alpine`)
 
 [![Docker Stars](https://img.shields.io/docker/stars/dockette/openjdk8.svg?style=flat)](https://hub.docker.com/r/dockette/openjdk8/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/dockette/openjdk8.svg?style=flat)](https://hub.docker.com/r/dockette/openjdk8/)
 
 ```
-docker run -v /path/to/site:/srv dockette/openjdk8
+docker run --rm -v /path/to/project:/data dockette/openjdk8 java -version
 ```
 
-### Maven 3 
+### Maven 3
 
-> Maven 3.5.4
+> Maven 3 on Eclipse Temurin 8 (`maven:3-eclipse-temurin-8-alpine`)
 
-This Maven 3 with Oracle Java JDK 8 is based on Alpine linux (`dockette/alpine:3.8`).
+Formerly Maven 3.5.4 on Oracle JDK 8. Ships `settings-docker.xml` in `/usr/share/maven/ref/`. `dockette/mvn` and `dockette/openjdk-mvn` are now the same image.
 
 [![Docker Stars](https://img.shields.io/docker/stars/dockette/mvn.svg?style=flat)](https://hub.docker.com/r/dockette/mvn/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/dockette/mvn.svg?style=flat)](https://hub.docker.com/r/dockette/mvn/)
+[![Docker Stars](https://img.shields.io/docker/stars/dockette/openjdk-mvn.svg?style=flat)](https://hub.docker.com/r/dockette/openjdk-mvn/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/dockette/openjdk-mvn.svg?style=flat)](https://hub.docker.com/r/dockette/openjdk-mvn/)
 
 ```
-docker run -v /path/to/site:/srv dockette/mvn
+docker run --rm -v /path/to/project:/data dockette/mvn mvn package
+docker run --rm -v /path/to/project:/data dockette/openjdk-mvn mvn package
 ```
 
 ## Maintenance
